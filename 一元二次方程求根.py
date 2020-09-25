@@ -10,4 +10,3 @@ def quadratic(a,b,c):
             return x1,x2
         else:
             return '方程无解'
-print(quadratic())
