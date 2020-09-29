@@ -1,6 +1,6 @@
 print('计算BMI')
 a=int(input('输入身高cm'))
-b=int(input('输入体重kg'))
+b=folat(input('输入体重kg'))
 c=(b/(a/100)**2)
 print('%.3f'%c)
 if c>=32:
