@@ -1,11 +1,6 @@
-n=int(input('请输入年份'))
-if n%400==0:
-    print('Yes')
-elif n%4==0 and n%100==0:
-    print('No')
+a=int(input('请输入年份'))
+if (a%4==0 and a%100!=0) or (a%400==0):
+    print('%d是闰年'%(a))
 else:
-    if n%4==0:
-        print('Yes')
-    else:
-        print('No')
+    print('%d不是闰年'%(a))
 
