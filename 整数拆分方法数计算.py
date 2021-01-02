@@ -27,8 +27,8 @@ def symbol(x):
     if x%4==1:return 1
     if x%4==2:return -1
     if x%4==3:return -1
-A=[1];B=[next(locations)];C=1
-while B[-1]>=len(A) and C<666:
+A=[1];B=[next(locations)];C=len(A)
+while C<666:
     a=0
     for i in range(1,len(A)+1):
         if i in B:
@@ -36,7 +36,7 @@ while B[-1]>=len(A) and C<666:
             a+=(A[-i]*symbol(b))
     A.append(a)
     C=len(A)
-    if B[-1]<=len(A):
+    if B[-1]<=C:
         B.append(next(locations))
 print(C)
 print(A[-1])
