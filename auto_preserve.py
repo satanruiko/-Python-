@@ -2,7 +2,6 @@ import requests
 import re
 import json
 import random
-import os
 from datetime import datetime,timedelta
 
 login_url_1='http://libuser.csu.edu.cn/center/ifcuas/login'
@@ -16,7 +15,6 @@ access_token=None
 null=None
 all_cookies={'uservisit':'1','language':'zh','CSU_P2P_TOKEN':'BENLipipGBxLjcAE5FhOWlwwieie'}
 tomorrow=(datetime.now()+timedelta(days=1)).strftime('%Y-%m-%d')
-hour='6';minute='1'
 seat_seed=None
 available_list=[]
 segment=None
