@@ -10,7 +10,7 @@ login_url_2='http://lib.csu.edu.cn/login.jspx?returnUrl=/'
 zw_url1='http://libzw.csu.edu.cn/cas/index.php?callback=http://libzw.csu.edu.cn/index.php/Home/Web'
 zw_url2='http://libzw.csu.edu.cn/Api/auto_user_check'
 query_url='http://libzw.csu.edu.cn/api.php/spaces_old'
-userId='8203200814';password='303318'
+userId='8203200815';password='r6BFb563RmjCFJs'
 sess=requests.Session()
 access_token=None
 null=None
@@ -58,7 +58,6 @@ def query_seat():
     seat_list=None
     global seat_seed
     seat_seed=len(available_list)
-    print(available_list)
     print('剩余座位数：',seat_seed)
     
 
@@ -98,17 +97,7 @@ def main(userId,password):
     else:
         print('没有座位，放弃预约')
     logout()
+
 main(userId=userId,password=password)
-# from apscheduler.schedulers.blocking import BlockingScheduler
-# mission=BlockingScheduler()
-# mission.add_job(main,'cron',args=[userId,password],hour=hour,minute=minute)
-# print('⏰ 已启动定时程序，每天 %02d:%02d 为您预约' % (int(hour), int(minute)))
-# print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
-
-# try:
-#     mission.start()
-# except(KeyboardInterrupt, SystemExit):
-#     print('疑问')
-
 
         
