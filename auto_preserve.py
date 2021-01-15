@@ -9,7 +9,7 @@ login_url_2='http://lib.csu.edu.cn/login.jspx?returnUrl=/'
 zw_url1='http://libzw.csu.edu.cn/cas/index.php?callback=http://libzw.csu.edu.cn/index.php/Home/Web'
 zw_url2='http://libzw.csu.edu.cn/Api/auto_user_check'
 query_url='http://libzw.csu.edu.cn/api.php/spaces_old'
-userId='8203200815';password='r6BFb563RmjCFJs'
+userId='';password=''
 sess=requests.Session()
 access_token=None
 null=None
