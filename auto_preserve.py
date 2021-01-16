@@ -93,9 +93,10 @@ def main(userId,password):
     if zw.seat_seed!=0:
         zw.seat_sys()
         zw.preserve()
+        zw.logout()
     else:
         print('没有座位，放弃预约')
-    zw.logout()
+    
 
 main(userId='',password='')
 
