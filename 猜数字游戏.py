@@ -18,5 +18,6 @@ while time>0:
     print('你还有%s次机会'%(time))
 if time==0:
     print('机会耗尽,下次吧') 
+    print('这个数字是',a)
 else:
     print('你真棒')
