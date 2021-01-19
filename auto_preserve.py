@@ -73,7 +73,7 @@ class auto_preserve(object):
             times-=1
             print(res.json()['msg'])
             if '预约成功'in res.json()['msg']:
-                print('预约成功，座位号为A%s' %(seed))
+                print('预约成功，座位号为A%s' %(eval(seed)-9165))
                 break
             else:
                 print('预约失败,剩余尝试次数%s' %(times))
@@ -91,6 +91,7 @@ def main(userId,password):
     zw.get_segment()
     zw.query_seat()
     if zw.seat_seed!=0:
+        zw.login()
         zw.seat_sys()
         zw.preserve()
         zw.logout()
