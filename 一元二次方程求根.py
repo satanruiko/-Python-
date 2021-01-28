@@ -1,12 +1,14 @@
-import math
 def quadratic(a,b,c):
-    B=b**2-4*a*c
-    if a==0:
-        return 'a不能为零'
+    temp=b**2-4*a*c
+    if a==0 and b==0:print('Data error!')
+    elif a==0 and b!=0:
+        print('%.2f'%((-c)/b))
     else:
-        if B>=0:
-            x1=(-b+math.sqrt(B))/2*a
-            x2=(-b-math.sqrt(B))/2*a
-            return x1,x2
+        if temp==0:
+            print('%.2f'%((-b)/(2*a)))
+        elif temp<0:
+            print('该方程无实数解')
         else:
-            return '方程无解'
+            print('%.2f %.2f' %(((-b)+pow(temp,0.5))/(2*a),((-b)-pow(temp,0.5))/(2*a)))
+#测试用例
+quadratic(1,1,2)

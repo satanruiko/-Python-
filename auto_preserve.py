@@ -8,11 +8,6 @@ null=None
 tomorrow=(datetime.now()+timedelta(days=1)).strftime('%Y-%m-%d')
 class auto_preserve(object):
     def __init__(self,userId,password):
-        self.login_url_1='http://libuser.csu.edu.cn/center/ifcuas/login'
-        self.login_url_2='http://lib.csu.edu.cn/login.jspx?returnUrl=/'
-        self.zw_url1='http://libzw.csu.edu.cn/cas/index.php?callback=http://libzw.csu.edu.cn/index.php/Home/Web'
-        self.zw_url2='http://libzw.csu.edu.cn/Api/auto_user_check'
-        self.query_url='http://libzw.csu.edu.cn/api.php/spaces_old'
         self.all_cookies={'uservisit':'1','language':'zh','CSU_P2P_TOKEN':'BENLipipGBxLjcAE5FhOWlwwieie'}
         self.sess=requests.Session()
         self.available_list=[]
@@ -28,29 +23,34 @@ class auto_preserve(object):
 
 
     def login(self):
+        login_url_1='http://libuser.csu.edu.cn/center/ifcuas/login'
+        login_url_2='http://lib.csu.edu.cn/login.jspx?returnUrl=/'
         data1={
             'userId': self.userId,'password':self.password,'appId':'zncms32',
             'retUrl': 'http://lib.csu.edu.cn/ssosync.jspx'
         }
-        res=self.sess.post(self.login_url_1,data=data1)
+        res=self.sess.post(login_url_1,data=data1)
         data2={'username':self.userId,'password':self.userId+'@infcn'}
-        res=self.sess.post(self.login_url_2,data=data2)
+        res=self.sess.post(login_url_2,data=data2)
 
     def seat_sys(self):
-        res=self.sess.get(self.zw_url1,cookies=self.all_cookies)
+        zw_url1='http://libzw.csu.edu.cn/cas/index.php?callback=http://libzw.csu.edu.cn/index.php/Home/Web'
+        zw_url2='http://libzw.csu.edu.cn/Api/auto_user_check'
+        res=self.sess.get(zw_url1,cookies=self.all_cookies)
         regex1=r'=[a-z0-9]+"'
         regex2=r'[a-z0-9]+'
         p=re.search(regex1,res.text)
         p=re.search(regex2,p[0])[0]
-        res=self.sess.get(self.zw_url2,params={'user':self.userId,'p':p})
+        res=self.sess.get(zw_url2,params={'user':self.userId,'p':p})
         self.access_token=res.cookies['access_token']
     
 
     def query_seat(self):
+        query_url='http://libzw.csu.edu.cn/api.php/spaces_old'
         params={'area':'59','segment':self.segment,'day':tomorrow,'startTime':'07:30','endTime':'22:00'}
         referer=f'http://libzw.csu.edu.cn/web/seat3?area=59&segment={self.segment}&day={tomorrow}&startTime=7:30&endTime=22:00'
         headers={'Origin': 'http://libzw.csu.edu.cn','Referer': referer,'Host': 'libzw.csu.edu.cn'}
-        res=self.sess.get(self.query_url,params=params,cookies=self.all_cookies,headers=headers)
+        res=self.sess.get(query_url,params=params,cookies=self.all_cookies,headers=headers)
         seat_list=res.json()['data']['list']
         for i in seat_list:
             if i['status_name']=='空闲':
