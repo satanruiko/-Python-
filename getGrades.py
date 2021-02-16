@@ -2,10 +2,44 @@ import requests
 import re
 from datetime import datetime
 
-encoded=r'ODIwMzIwMDgxNQ==%%%cjZCRmI1NjNSbWpDRkpz'
+def encodeInp(string):
+    keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+    i=0
+    length=len(string)
+    output=''
+    chr1,chr2,chr3,enc1,enc2,enc3,enc4=None,None,None,None,None,None,None
+    while i<length:
+        try:
+            chr1=ord(string[i])
+        except:
+            chr1=0
+        i+=1
+        try:
+            chr2=ord(string[i])
+        except:
+            chr2=0
+        i+=1
+        try:
+            chr3=ord(string[i])
+        except:
+             chr3=0
+        i+=1
+        enc1 = chr1 >> 2
+        enc2 = ((chr1 & 3) << 4) | (chr2 >> 4)
+        enc3 = ((chr2 & 15) << 2) | (chr3 >> 6)
+        enc4 = chr3 & 63
+        if chr2==0:
+            enc3,enc4=64,64
+        else:
+            if chr3==0:
+                enc4=64
+        output+=keyStr[enc1]+keyStr[enc2]+keyStr[enc3]+keyStr[enc4]
+    return output
+
 class getGrade(object):
-    def __init__(self,encoded):
-        self.encoded=encoded
+    def __init__(self,account,password):
+        self.account=encodeInp(account)
+        self.password=encodeInp(password)
         self.sess=requests.Session()
         self.get_url='http://csujwc.its.csu.edu.cn/jsxsd/kscj/cjcx_list?Ves632DSdyV=NEW_XSD_WDCJ'
         self.login_url='http://csujwc.its.csu.edu.cn/jsxsd/xk/LoginToXk'
@@ -13,7 +47,7 @@ class getGrade(object):
         self.get_rank_url='http://csujwc.its.csu.edu.cn/jsxsd/kscj/zybm_cx'
 
     def login(self):
-        data={'encoded':self.encoded}
+        data={'encoded':self.account+r'%%%'+self.password}
         headers={'Referer':'http://csujwc.its.csu.edu.cn/jsxsd/kscj/yscjcx_list'}
         res=self.sess.post(self.login_url,data=data,headers=headers)
 
@@ -40,22 +74,27 @@ class getGrade(object):
         for i in info:
             print(i)
 
-
     def logout(self):
         tktime=str(int(datetime.now().timestamp()))
         url=self.logout_url.replace('substitute',tktime)
         res=self.sess.get(url)
         res=self.sess.get('https://ca.csu.edu.cn/authserver/logout')
 
-def main(encoded):
-    hzx=getGrade(encoded)
+def main(account,password):
+    hzx=getGrade(account,password)
     hzx.login()
     try:
         hzx.get()
         hzx.get_rank()
     except:
         print('error')
-    hzx.logout()
+        hzx.logout()
 
-main(encoded)
-
+with open(r'D:\source.csv') as source:
+    flag=1
+    while flag:
+        flag=source.readline()
+        account,password=flag.split(',')
+        password=password.strip()
+        print(account)
+        main(account,password)
