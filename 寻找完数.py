@@ -11,7 +11,7 @@ def check(a):
         return map(str,sorted(factor))
     else:
         return 0
-i=1;ls=0
+i=6;ls=0
 n=int(input())
 while True:
     ff=check(i)
